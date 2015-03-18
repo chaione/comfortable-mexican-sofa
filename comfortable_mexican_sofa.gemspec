@@ -4,7 +4,7 @@ $:.unshift File.expand_path('../lib', __FILE__)
 require 'comfortable_mexican_sofa/version'
 
 Gem::Specification.new do |s|
-  s.name          = "cms-chaione"
+  s.name          = "comfortable-mexican-sofa"
   s.version       = ComfortableMexicanSofa::VERSION
   s.authors       = ["Oleg Khabarov"]
   s.email         = ["oleg@khabarov.ca"]

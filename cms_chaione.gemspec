@@ -4,11 +4,11 @@ $:.unshift File.expand_path('../lib', __FILE__)
 require 'comfortable_mexican_sofa/version'
 
 Gem::Specification.new do |s|
-  s.name          = "comfortable_mexican_sofa"
+  s.name          = "cms-chaione"
   s.version       = ComfortableMexicanSofa::VERSION
   s.authors       = ["Oleg Khabarov"]
   s.email         = ["oleg@khabarov.ca"]
-  s.homepage      = "http://github.com/comfy/comfortable-mexican-sofa"
+  s.homepage      = "http://github.com/jjwright55/cms-chaione"
   s.summary       = "Rails 4 CMS Engine"
   s.description   = "ComfortableMexicanSofa is a powerful Rails 4 CMS Engine"
   s.license       = 'MIT'

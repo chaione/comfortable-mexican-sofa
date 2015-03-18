@@ -41,6 +41,10 @@ class UpgradeTo1120 < ActiveRecord::Migration
         WHERE record_type = 'Cms::#{klass}'
       ")
     end
+       create_table :comfy_cms_darticles do |t|
+         t.integer :article_id
+         t.timestamps
+       end
   end
 
   def self.down

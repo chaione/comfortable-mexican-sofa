@@ -47,9 +47,17 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   end
 
   def destroy
+    del = ::Comfy::Cms::Darticle.new
+    del.article_id = @page.id
+    del.save!
     @page.destroy
     flash[:success] = I18n.t('comfy.admin.cms.pages.deleted')
     redirect_to :action => :index
+  end
+  
+  def get_all_deleted
+    dlist = ::Comfy::Cms::Darticle.all
+    render json: dlist, status: :ok
   end
 
   def form_blocks

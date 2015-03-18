@@ -11,6 +11,7 @@ class ActionDispatch::Routing::Mapper
             resources :pages do
               get  :form_blocks,    :on => :member
               get  :toggle_branch,  :on => :member
+              get  :deleted, to: 'pages#get_all_deleted', defaults: {format: :json}
               put :reorder,         :on => :collection
               resources :revisions, :only => [:index, :show, :revert] do
                 patch :revert, :on => :member

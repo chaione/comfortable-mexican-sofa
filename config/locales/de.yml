@@ -1,0 +1,244 @@
+# encoding: utf-8
+de:
+  attributes:
+    label: Bezeichnung
+    slug: URL
+    parent_id: Vorfahre
+    content: Inhalt
+    identifier: Eindeutige Bezeichnung
+    full_path: Vollständiger Pfad
+  activerecord:
+    models:
+      comfy/cms/site: Web
+      comfy/cms/layout: Layout
+      comfy/cms/page: Seite
+      comfy/cms/snippet: Schnipsel
+      comfy/cms/file: Datei
+    attributes:
+      comfy/cms/site:
+        identifier: Name
+        hostname: Hostname
+        path: Pfad
+        locale: Sprache
+        is_mirrored: Gespiegelt
+      comfy/cms/layout:
+        identifier: Eindeutiger Name
+        label: Name
+        app_layout: Grundlegendes Layout
+        parent_id: Übergeordnetes Layout
+        css: CSS-Stilvorlage
+        js: JavaScript
+      comfy/cms/page:
+        label: Titel
+        layout_id: Layout
+        slug: URL
+        target_page_id: Weiterleitung zu Seite
+        is_published: Veröffentlicht
+      comfy/cms/file:
+        file: Datei
+        description: Beschreibung
+      comfy/cms/snippet:
+        identifier: Eindeutiger Name
+
+  comfy:
+    cms:
+      content:
+        site_not_found: Web nicht gefunden
+        layout_not_found: Layout nicht gefunden
+        page_not_found: Seite nicht gefunden
+
+    admin:
+      cms:
+        base:
+          site_not_found: Fehler
+          fixtures_enabled: Fixtures sind aktiviert - alle Änderungen werden verworfen!
+
+          sites: Webs
+          layouts: Layouts
+          pages: Seiten
+          snippets: Schnipsel
+          files: Dateien
+
+        sites:
+          created: Web erstellt
+          creation_failure: Fehler beim Erstellen des Webs!
+          updated: Web aktualisiert
+          update_failure: Fehler beim Aktualisieren des Webs!
+          deleted: Web gelöscht
+          not_found: Web existiert nicht
+
+          index:
+            title: Webs
+            new_link: Neues Web erstellen
+            select: Auswählen
+            edit: Bearbeiten
+            delete: Löschen
+            are_you_sure: Sicher, dass Sie dieses Web löschen möchten?
+          new:
+            title: Web erstellen
+          edit:
+            title: Web bearbeiten
+          form:
+            create: Web erstellen
+            cancel: Abbrechen
+            update: Web speichern
+            is_mirrored: Gespiegelt
+
+        layouts:
+          created: Layout erstellt
+          creation_failure: Fehler beim Erstellen des Layouts!
+          updated: Layout aktualisiert
+          update_failure: Fehler beim Aktualisieren des Layouts!
+          deleted: Layout gelöscht
+          not_found: Layout nicht angelegt
+
+          index:
+            title: Layouts
+            new_link: Neues Layout erstellen
+          index_branch:
+            add_child_layout: Neues, untergeordnetes Layout erstellen
+            edit: Layout bearbeiten
+            delete: Layout löschen
+            are_you_sure: Sind Sie sicher, dass Sie dieses Layout löschen möchten?
+          new:
+            title: Neues Layout
+          edit:
+            title: Layout bearbeiten
+            revision: &revision
+              zero: Keine Versionen
+              one: '%{count} Version'
+              few: '%{count} Versionen'
+              many: '%{count} Versionen'
+              other: '%{count} Versionen'
+          form:
+            select_parent_layout: Übergeordnetes Layout auswählen
+            select_app_layout: Grundlegendes Layout auswählen
+            create: Layout erstellen
+            cancel: Abbrechen
+            update: Layout speichern
+
+        pages:
+          created: Seite erstellt
+          creation_failure: Fehler beim Erstellen der Seite!
+          updated: Seite aktualisiert
+          update_failure: Fehler beim Aktualisieren der Seite!
+          deleted: Seite gelöscht
+          not_found: Seite nicht gefunden
+          layout_not_found: Bisher wurde kein Layout angelegt!
+
+          index:
+            title: Seiten
+            new_link: Neue Seite erstellen
+          index_branch:
+            toggle: Schalter
+            add_child_page: Neue, untergeordnete Seite erstellen
+            edit: Bearbeiten
+            delete: Löschen
+            are_you_sure: Sind Sie sicher, dass Sie diese Seite löschen möchten?
+          new:
+            title: Seite erstellen
+          edit:
+            title: Seite bearbeiten
+            delete: Löschen
+            are_you_sure: Sind Sie sicher?
+            revision:
+              <<: *revision
+          form:
+            select_target_page: Keine Weiterleitung
+            preview: Vorschau
+            create: Seite erstellen
+            cancel: Abbrechen
+            update: Seite speichern
+            is_published: Veröffentlicht
+            choose_link: Seite auswählen...
+          form_blocks:
+            no_tags: |-
+              Das gewählte Layout hat kein Comfy-Tags deklariert, daher kann diese Seite nicht bearbeitet werden.<br/>
+              Beispiel: <code>{{ cms:page:content }}</code>
+
+        snippets:
+          created: Schnipsel erstellt
+          creation_failure: Fehler beim Erstellen des Schnipsels!
+          updated: Schnipsel aktualisiert
+          update_failure: Fehler beim Aktualisieren des Schnipsels!
+          deleted: Schnipsel gelöscht
+          not_found: Schnipsel nicht angelegt
+
+          index:
+            title: Schnipsel
+            new_link: Neuen Schnipsel erstellen
+            edit: Schnipsel bearbeiten
+            delete: Schnipsel löschen
+            are_you_sure: Sind Sie sicher, dass Sie diesen Schnipsel löschen möchten?
+          new:
+            title: Schnipsel erstellen
+          edit:
+            title: Schnipsel bearbeiten
+            revision:
+              <<: *revision
+          form:
+            create: Schnipsel erstellen
+            cancel: Abbrechen
+            update: Schnipsel speichern
+
+        revisions:
+          reverted: Inhalt wurde aus gewählter Version wiederhergestellt
+          record_not_found: Eintrag in gewählter Version nicht gefunden
+          not_found: Version nicht gefunden
+
+          show:
+            title: Versionen von
+            revision: Version
+            full_path: Vollständiger Pfad
+            slug: URL
+            update: Zurücksetzen auf gewählte Version
+            content: Inhalt
+            changes: Änderungen
+            previous: Vorherige Version
+            current: Aktuell
+
+        files:
+          created: Datei hochgeladen
+          creation_failure: Fehler beim Hochladen der Datei!
+          updated: Datei hochgeladen
+          update_failure: Fehler beim Aktualisieren der Datei!
+          deleted: Datei gelöscht
+          not_found: Datei nicht gefunden
+
+          index:
+            title: Datei
+            new_link: Neue Datei hochladen
+            edit: Datei bearbeiten
+            delete: Datei löschen
+            are_you_sure: Sind Sie sicher, dass Sie diese Datei löschen möchten?
+            button: Datei hochladen
+          new:
+            title: Datei erstellen
+          edit:
+            title: Datei bearbeiten
+          form:
+            current_file: Aktuelle Datei
+            create: Datei hochladen
+            cancel: Abbrechen
+            update: Datei speichern
+            delete: Datei löschen
+            are_you_sure: Sind Sie sicher, dass Sie diese Datei löschen möchten?
+          page_form:
+            are_you_sure: Sind Sie sicher?
+          file:
+            are_you_sure: Sind Sie sicher?
+
+        categories:
+          index:
+            label: Kategorien
+            edit: Bearbeiten
+            done: Erledigt
+            all: Alle
+            add: Hinzuzufügen
+            add_placeholder: Kategorie hinzuzufügen
+          show:
+            are_you_sure: Sind Sie sicher, dass Sie diese Kategorie löschen möchten?
+          edit:
+            save: Kategorie speichern
+          form:
+            label: Kategorien

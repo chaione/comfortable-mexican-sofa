@@ -3,6 +3,7 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   before_action :check_for_layouts, :only => [:new, :edit]
   before_action :build_cms_page,    :only => [:new, :create]
   before_action :load_cms_page,     :only => [:edit, :update, :destroy]
+  skip_before_action :authorize, :only => [:index, :get_all_deleted]
   before_action :authorize
   before_action :preview_cms_page,  :only => [:create, :update]
 

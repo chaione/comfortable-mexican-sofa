@@ -4,7 +4,6 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
   before_action :build_cms_page,    :only => [:new, :create]
   before_action :load_cms_page,     :only => [:edit, :update, :destroy]
   before_action :authorize
-  skip_before_action :authorize, :only => [:get_all_deleted]
   before_action :preview_cms_page,  :only => [:create, :update]
 
   def index
@@ -56,11 +55,6 @@ class Comfy::Admin::Cms::PagesController < Comfy::Admin::Cms::BaseController
     redirect_to :action => :index
   end
   
-  def get_all_deleted
-    @dlist = ::Comfy::Cms::Darticle.all
-    render json: @dlist, status: :ok
-  end
-
   def form_blocks
     @page = @site.pages.find_by_id(params[:id]) || @site.pages.new
     @page.layout = @site.layouts.find_by_id(params[:layout_id])

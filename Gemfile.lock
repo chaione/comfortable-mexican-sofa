@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    comfortable_mexican_sofa (0.1.13)
+    comfortable_mexican_sofa (0.1.15)
       active_link_to (>= 1.0.0)
       bootstrap-sass (>= 3.2.0)
       bootstrap_form (>= 2.2.0)
@@ -101,10 +101,10 @@ GEM
       activesupport (>= 4.1.0)
     haml (4.0.6)
       tilt
-    haml-rails (0.9.0)
+    haml-rails (0.8.2)
       actionpack (>= 4.0.1)
       activesupport (>= 4.0.1)
-      haml (>= 4.0.6, < 5.0)
+      haml (>= 3.1, < 5.0)
       html2haml (>= 1.0.1)
       railties (>= 4.0.1)
     hike (1.2.3)
@@ -185,7 +185,7 @@ GEM
     ruby_parser (3.6.5)
       sexp_processor (~> 4.1)
     sass (3.4.13)
-    sass-rails (5.0.2)
+    sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)

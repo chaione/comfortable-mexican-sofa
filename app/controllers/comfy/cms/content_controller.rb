@@ -30,7 +30,33 @@ protected
   def render_page(status = 200)
     if @cms_layout = @cms_page.layout
       app_layout = (@cms_layout.app_layout.blank? || request.xhr?) ? false : @cms_layout.app_layout
-      render  :inline       => @cms_page.content_cache,
+      tags_before = @cms_page.categories.map(&:label)
+      tags = []
+      tags_before.each do |tag|
+        tag.sub!("location_", "")
+        tags << tag
+      end
+      html = @cms_page.content_cache
+      doc = Nokogiri.HTML(html)
+      ret = []
+      doc.css('.nns_images').each do |i|
+        txt = i.children[0].to_s
+        txt.strip!
+        txt.split(', ').each { |l| ret << l }
+      end
+      imgs = ret
+      imgs.each do |img|
+        next if not img =~ /http/
+        thumb = img.sub("original", "cms_thumb")
+        html.sub!(img, "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+      end
+      tagstr = tags.join(" ")
+      html.gsub!('$TAGS$', "<h2 class=\"tags\">#{tagstr}</h2>")
+      pdate = @cms_page.updated_at
+      html.sub!('$UPDATED_AT$', pdate.strftime("%b-%-d-%Y"))
+      html.sub!('$TITLE$', @cms_page.label)
+  
+      render  :inline       => html,
               :layout       => app_layout,
               :status       => status,
               :content_type => mime_type

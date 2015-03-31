@@ -6,11 +6,11 @@ require 'comfortable_mexican_sofa/version'
 Gem::Specification.new do |s|
   s.name          = "comfortable_mexican_sofa"
   s.version       = ComfortableMexicanSofa::VERSION
-  s.authors       = ["Oleg Khabarov"]
-  s.email         = ["oleg@khabarov.ca"]
+  s.authors       = ["Oleg Khabarov", "Jesse Wright"]
+  s.email         = ["oleg@khabarov.ca", "jesse.wright.c1@chaione.com}"]
   s.homepage      = "http://github.com/jjwright55/comfortable-mexican-sofa"
   s.summary       = "Rails 4 CMS Engine"
-  s.description   = "ComfortableMexicanSofa is a powerful Rails 4 CMS Engine"
+  s.description   = "ComfortableMexicanSofa minor mod's for Chaione"
   s.license       = 'MIT'
 
   s.files         = `git ls-files`.split("\n")

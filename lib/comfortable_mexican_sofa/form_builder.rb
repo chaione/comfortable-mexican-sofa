@@ -89,6 +89,7 @@ class ComfortableMexicanSofa::FormBuilder < BootstrapForm::FormBuilder
   end
 
   def page_files(tag, index)
+    #"<div id="html5_uploader">Your browser doesn't support native upload.</div>"
     default_tag_field(tag, index, :file_field_tag, :multiple => true)
   end
 

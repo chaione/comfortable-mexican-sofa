@@ -37,15 +37,15 @@ protected
         tags << tag
       end
       html = @cms_page.content_cache
-      doc = Nokogiri.HTML(html)
-      ret = []
-      doc.css('.nns_images').each do |i|
-        txt = i.children[0].to_s
-        txt.strip!
-        txt.split(', ').each { |l| ret << l }
-      end
-      imgs = ret
+      idx = html.index('nss_images')
+      idx = html.index(">", idx)
+      endidx = html.index('<', idx)
+      image_str = html[(idx+1)..(endidx-1)]
+      image_str.strip!
+      imgs = image_str.split(', ')
+      byebug
       imgs.each do |img|
+        img.strip!
         next if not img =~ /http/
         thumb = img.sub("original", "cms_thumb")
         html.sub!(img, "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")

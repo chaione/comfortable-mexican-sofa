@@ -37,6 +37,12 @@ protected
         tags << tag
       end
       html = @cms_page.content_cache
+      idx = html.index('<div class="body_content">') + '<div class="body_content">'.size
+      endidx = html.index('</div>', idx)
+      body = html[(idx+1)..(endidx-1)]
+      body.gsub!("\r\n\r\n", "<p />")
+      body.gsub!("\r\n", '<br />')
+      html = "#{html[0..(idx-1)]}#{body}#{html[endidx..(html.size)]}"
       idx = html.index('nss_images')
       idx = html.index(">", idx)
       endidx = html.index('<', idx)

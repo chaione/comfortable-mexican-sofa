@@ -43,7 +43,6 @@ protected
       image_str = html[(idx+1)..(endidx-1)]
       image_str.strip!
       imgs = image_str.split(', ')
-      byebug
       imgs.each do |img|
         img.strip!
         next if not img =~ /http/

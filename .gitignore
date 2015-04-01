@@ -4,7 +4,6 @@ capybara-*.html
 /log
 /tmp
 /db/*.sqlite3
-/public/system
 /coverage/
 /spec/tmp
 **.orig
@@ -39,8 +38,6 @@ db/development_structure.sql
 pkg
 rdoc
 /tmp
-public/*
-Gemfile.lock
 .rvmrc
 .ruby-version
 /.sass-cache

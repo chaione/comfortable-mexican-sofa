@@ -51,7 +51,7 @@ protected
         html.sub!(img, "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
       end
       tagstr = tags.join(" ")
-      html.gsub!('$TAGS$', "<h2 class=\"tags\">#{tagstr}</h2>")
+      html.gsub!('$TAGS$', "#{tagstr}")
       pdate = @cms_page.updated_at
       html.sub!('$UPDATED_AT$', pdate.strftime("%b-%-d-%Y"))
       html.sub!('$TITLE$', @cms_page.label)

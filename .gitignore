@@ -45,3 +45,4 @@ Gemfile.lock
 .ruby-version
 /.sass-cache
 coverage/
+Rakefile

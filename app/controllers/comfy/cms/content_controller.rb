@@ -43,8 +43,11 @@ protected
       image_str = html[(idx+1)..(endidx-1)]
       image_str.strip!
       imgs = image_str.split(', ')
+      byebug
+      last_img = ""
       imgs.each do |img|
         img.strip!
+        last_img = img
         next if not img =~ /http/
         thumb = img.sub("original", "cms_thumb")
         html.sub!("#{img},", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
@@ -53,6 +56,10 @@ protected
         idx = html.index('<section id="thumb-gallery"')
         endidx = html.index('</section>', idx) + '</section>'.size
         html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
+      else
+        img = last_img
+        thumb = img.sub("original", "cms_thumb")
+        html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
       end
       tagstr = tags.join(" ")
       html.gsub!('$TAGS$', "#{tagstr}")

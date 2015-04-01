@@ -47,7 +47,12 @@ protected
         img.strip!
         next if not img =~ /http/
         thumb = img.sub("original", "cms_thumb")
-        html.sub!(img, "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+        html.sub!("#{img},", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+      end
+      if imgs.size == 0
+        idx = html.index('<section id="thumb-gallery"')
+        endidx = html.index('</section>', idx) + '</section>'.size
+        html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
       end
       tagstr = tags.join(" ")
       html.gsub!('$TAGS$', "#{tagstr}")

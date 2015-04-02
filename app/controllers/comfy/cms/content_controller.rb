@@ -27,48 +27,69 @@ class Comfy::Cms::ContentController < Comfy::Cms::BaseController
 
 protected
 
+  def remove_section(html, first, last)
+    idx = html.index(first)
+    endidx = html.index(last, idx) + last.size
+    html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
+  end
+
   def render_page(status = 200)
     if @cms_layout = @cms_page.layout
       app_layout = (@cms_layout.app_layout.blank? || request.xhr?) ? false : @cms_layout.app_layout
+      
+      # categories to tabse
       tags_before = @cms_page.categories.map(&:label)
       tags = []
       tags_before.each do |tag|
         tag.sub!("location_", "")
         tags << tag
       end
+      
+      # html
       html = @cms_page.content_cache
+      
+      # youtube
+      idx = html.index('<div class="video-container">')
+      endidx = html.index('</div>', idx) + '</div>'.size
+      srcidx = html.index('src="', idx) + 'src="'.size
+      endsrcidx = html.index('"', srcidx)
+      if endsrcidx - srcidx < 7
+        html = remove_section(html, '<div class="video-container">', '</div>')
+      end
+      
+      # content
       idx = html.index('<div class="body_content">') + '<div class="body_content">'.size
       endidx = html.index('</div>', idx)
       body = html[(idx+1)..(endidx-1)]
       body.gsub!("\r\n\r\n", "<p />")
       body.gsub!("\r\n", '<br />')
       html = "#{html[0..(idx-1)]}#{body}#{html[endidx..(html.size)]}"
+      
+      # images
       idx = html.index('nss_images')
       idx = html.index(">", idx)
       endidx = html.index('<', idx)
       image_str = html[(idx+1)..(endidx-1)]
       image_str.strip!
-      imgs = image_str.split(', ')
-      last_img = ""
-      imgs.each do |img|
-        img.strip!
-        last_img = img
-        next if not img =~ /http/
-        thumb = img.sub("original", "cms_thumb")
-        html.sub!("#{img},", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
-      end
+      image_str.gsub!(',', ' ')
+      imgs = image_str.split(' ')
       if imgs.size == 0
-        idx = html.index('<section id="thumb-gallery"')
-        endidx = html.index('</section>', idx) + '</section>'.size
-        html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
+        html = remove_section(html, '<section id="thumb-gallery"', '</section>')
       else
-        img = last_img
-        thumb = img.sub("original", "cms_thumb")
-        html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+        imgs.each do |img|
+          img.strip!
+          next if not img =~ /http/
+          thumb = img.sub("original", "cms_thumb")
+          html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+        end
       end
+
+      # categories or tags
       tagstr = tags.join(" ")
       html.gsub!('$TAGS$', "#{tagstr}")
       pdate = @cms_page.updated_at
+      
+      #  templates
       html.sub!('$UPDATED_AT$', pdate.strftime("%b-%-d-%Y"))
       html.sub!('$TITLE$', @cms_page.label)
   

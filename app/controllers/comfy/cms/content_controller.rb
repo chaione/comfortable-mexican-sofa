@@ -81,10 +81,10 @@ protected
           thumb = img.sub("original", "cms_thumb")
           html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
         end
+        idx = html.index('nss_images')
+        endidx = html.index("</ul>", idx)
+        html[idx..endidx].gsub!(',', '')
       end
-      idx = html.index('nss_images')
-      endidx = html.index("</ul>", idx)
-      html[idx..endidx].gsub!(',', '')
            
       # categories or tags
       tagstr = tags.join(" ")

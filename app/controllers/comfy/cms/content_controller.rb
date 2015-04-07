@@ -94,6 +94,7 @@ protected
       #  templates
       html.sub!('$UPDATED_AT$', pdate.strftime("%b-%-d-%Y"))
       html.sub!('$TITLE$', @cms_page.label)
+      html.sub!('$ARTICLEID$', @cms_page.id)
   
       render  :inline       => html,
               :layout       => app_layout,

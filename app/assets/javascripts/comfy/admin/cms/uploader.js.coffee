@@ -11,7 +11,6 @@
     # Add a file to the file list.
     addFile = (file) ->
       fileList = $(".cms-uploader-filelist", target)
-
       fileList.prepend("
         <tr id='#{file.id}' class='temp'>
           <td><div class='icon'></div></td>
@@ -61,9 +60,15 @@
       browse_button:  "#{id}-browse"
       container:      id
       file_data_name: "file[file]"
+      unique_names: true
+      filters : {
+        mime_types: [
+          {title : "Image files", extensions : "jpg,gif,png"}
+        ]
+      }
     , settings)
 
-    uploader = new plupload.Uploader(settings)
+    uploader = new plupload.uploader(settings)
     uploader.bind "PostInit", (up) ->
 
       # Show drag and drop info and attach events if drag and drop is

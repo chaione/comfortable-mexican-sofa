@@ -19,5 +19,6 @@
 #= require comfy/admin/cms/lib/redactor/video
 #= require_directory ./lib/redactor/i18n/
 #= require comfy/admin/cms/base
-#= require comfy/admin/cms/uploader
+#= require comfy/admin/cms/newuploader
 #= require comfy/admin/cms/files
+

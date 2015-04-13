@@ -4,7 +4,7 @@ gemspec
 
 # apps can also use will_paginate so there's no dependency in gemspec
 gem 'kaminari'
-
+gem 'browser-timezone-rails'
 group :development do
 
   gem 'awesome_print'

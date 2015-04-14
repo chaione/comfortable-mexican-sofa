@@ -29,6 +29,7 @@ protected
 
   def remove_section(html, first, last)
     idx = html.index(first)
+    return html if idx.nil?
     endidx = html.index(last, idx) + last.size
     html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
   end
@@ -78,7 +79,7 @@ protected
       else
         imgs.each do |img|
           img.strip!
-          next if not img =~ /http/
+          #next if not img =~ /http/
           thumb = img.sub("original", "cms_thumb")
           html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
         end
@@ -87,8 +88,8 @@ protected
         #html[idx..endidx].gsub!(',', '')
       end
       
-      # remove publish_on
-      html = remove_section(html, '<div class="publish_on">', '</div>')
+      # remove published_on
+      html = remove_section(html, '<div class="published_on">', '</div>')
            
       # categories or tags
       tagstr = tags.join(" ")

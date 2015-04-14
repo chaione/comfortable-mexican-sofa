@@ -86,6 +86,9 @@ protected
         #endidx = html.index("</ul>", idx)
         #html[idx..endidx].gsub!(',', '')
       end
+      
+      # remove publish_on
+      html = remove_section(html, '<div class="publish_on">', '</div>')
            
       # categories or tags
       tagstr = tags.join(" ")

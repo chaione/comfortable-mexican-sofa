@@ -1,7 +1,11 @@
 PATH
   remote: .
   specs:
-    comfortable_mexican_sofa (0.1.28)
+<<<<<<< HEAD
+    comfortable_mexican_sofa (0.1.29)
+=======
+    comfortable_mexican_sofa (0.1.24)
+>>>>>>> parent of 2f5e4e8... working on browser timeout
       active_link_to (>= 1.0.0)
       bootstrap-sass (>= 3.2.0)
       bootstrap_form (>= 2.2.0)
@@ -72,9 +76,6 @@ GEM
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.2.19)
     bootstrap_form (2.3.0)
-    browser-timezone-rails (0.0.8)
-      jquery-rails
-      rails (>= 3.1)
     builder (3.2.2)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -227,7 +228,6 @@ DEPENDENCIES
   awesome_print
   better_errors
   binding_of_caller
-  browser-timezone-rails
   comfortable_mexican_sofa!
   coveralls
   jdbc-sqlite3

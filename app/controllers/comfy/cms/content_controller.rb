@@ -71,6 +71,7 @@ protected
       endidx = html.index('<', idx)
       image_str = html[(idx+1)..(endidx-1)]
       image_str.strip!
+      image_str.gsub!(',', ' ')
       imgs = image_str.split(' ')
       if imgs.size == 0
         html = remove_section(html, '<section id="thumb-gallery"', '</section>')
@@ -79,11 +80,11 @@ protected
           img.strip!
           next if not img =~ /http/
           thumb = img.sub("original", "cms_thumb")
-          html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img  class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+          html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
         end
-        idx = html.index('nss_images')
-        endidx = html.index("</ul>", idx)
-        html[idx..endidx].gsub!(',', '')
+        #idx = html.index('nss_images')
+        #endidx = html.index("</ul>", idx)
+        #html[idx..endidx].gsub!(',', '')
       end
            
       # categories or tags

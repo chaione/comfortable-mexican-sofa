@@ -61,6 +61,7 @@
       container:      id
       file_data_name: "file[file]"
       unique_names: true
+      max_file_size: "1g"
       filters : {
         mime_types: [
           {title : "Image files", extensions : "jpg,gif,png"}

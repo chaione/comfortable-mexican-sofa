@@ -68,7 +68,7 @@ protected
       # images
       idx = html.index('nss_images')
       idx = html.index(">", idx)
-      endidx = html.index('<', idx)
+      endidx = html.index('</ul', idx)
       image_str = html[(idx+1)..(endidx-1)]
       image_str.strip!
       image_str.gsub!(',', ' ')
@@ -84,11 +84,13 @@ protected
         end
         idx = html.index('nss_images')
         endidx = html.index("</ul>", idx)
-        html[idx..endidx].gsub!(',', '')
+        hval = html[idx..endidx]
+        hval.gsub!(',', '')
+        html = "#{html[0..(idx-1)]}#{hval}#{html[endidx..-1]}"
       end
       
       # remove published_on
-      html = remove_section(html, '<div class="published_on">', '</div>')
+      html = remove_section(html, '<div class="publish_on">', '</div>')
            
       # categories or tags
       tagstr = tags.join(" ")

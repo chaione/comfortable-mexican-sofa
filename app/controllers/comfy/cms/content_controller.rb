@@ -38,12 +38,11 @@ protected
     if @cms_layout = @cms_page.layout
       app_layout = (@cms_layout.app_layout.blank? || request.xhr?) ? false : @cms_layout.app_layout
       
-      # categories to tabse
+      # categories to tabs
       tags_before = @cms_page.categories.map(&:label)
       tags = []
       tags_before.each do |tag|
-        tag.sub!("location_", "")
-        tags << tag
+        tags << tag if not tag =~ /location/
       end
       
       # html
@@ -83,9 +82,9 @@ protected
           thumb = img.sub("original", "cms_thumb")
           html.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
         end
-        #idx = html.index('nss_images')
-        #endidx = html.index("</ul>", idx)
-        #html[idx..endidx].gsub!(',', '')
+        idx = html.index('nss_images')
+        endidx = html.index("</ul>", idx)
+        html[idx..endidx].gsub!(',', '')
       end
       
       # remove published_on

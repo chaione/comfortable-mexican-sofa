@@ -1,4 +1,6 @@
 
+require 'socket'
+
 def remove_section(html, first, last)
   idx = html.index(first)
   return html if idx.nil?
@@ -8,6 +10,8 @@ end
 
 
 def convert_page(cms_page)
+  
+  hostname = Socket.gethostname
 
   # categories to tabs
   tags_before = cms_page.categories.map(&:label)
@@ -49,6 +53,11 @@ def convert_page(cms_page)
   else
     imgs.each do |img|
       img.strip!
+      if img =~ /\A\/?images/
+        img = "http://#{hostname}/#{img}"
+      elsif img =~ /amazon/
+        img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
+      end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")
       image_str.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")

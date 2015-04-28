@@ -26,8 +26,8 @@ class Comfy::Cms::Site < ActiveRecord::Base
     :presence   => true
   validates :hostname,
     :presence   => true,
-    :uniqueness => { :scope => :path },
-    :format     => { :with => /\A[\w\.\-]+(?:\:\d+)?\z/ }
+    :uniqueness => { :scope => :path }
+    #:format     => { :with => /\A[\w\.\-]+(?:\:\d+)?\z/ }
 
   # -- Scopes ---------------------------------------------------------------
   scope :mirrored, -> { where(:is_mirrored => true) }

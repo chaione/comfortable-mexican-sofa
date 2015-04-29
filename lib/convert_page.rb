@@ -8,10 +8,27 @@ def remove_section(html, first, last)
   html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
 end
 
+def find_date(str, pdate)
+  startidx = str.index("<div class=\"publish_on\">")
+  endidx = str.index("</div>", startidx)
+  startidx += "<div class=\"publish_on\">".size
+  endidx -= 1
+  ret = str[startidx..endidx]
+  ret.gsub!('<', '')
+  ret.gsub!('>', '')
+  ret.strip!
+  if ret.index(':') != 0
+    s = ret.index(':') - 2
+    str = ret[0..s]
+    str.strip!
+  end
+  return str
+end
 
-def convert_page(cms_page)
-  
-  hostname = Socket.gethostname
+
+def convert_page(cms_page) 
+
+  hostname = "azlnxapp003t.cloudapp.net"
 
   # categories to tabs
   tags_before = cms_page.categories.map(&:label)
@@ -64,9 +81,6 @@ def convert_page(cms_page)
     end
     html = "#{html[0..(idx-1)]}#{image_str}#{html[endidx..-1]}"
   end
-  
-  # remove published_on
-  html = remove_section(html, '<div class="publish_on">', '</div>')
        
   # categories or tags
   tagstr = tags.join(" ")
@@ -74,9 +88,12 @@ def convert_page(cms_page)
   pdate = cms_page.updated_at
   
   #  templates
-  html.sub!('$UPDATED_AT$', pdate.strftime("%b-%-d-%Y"))
+  html.sub!('$UPDATED_AT$', find_date(html, pdate))
   html.sub!('$TITLE$', cms_page.label)
   html.sub!('$ARTICLEID$', cms_page.id.to_s)
+  
+  # remove published_on
+  html = remove_section(html, '<div class="publish_on">', '</div>')       
 
   return html
 end

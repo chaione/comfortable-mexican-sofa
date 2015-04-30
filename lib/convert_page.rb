@@ -27,8 +27,11 @@ end
 
 
 def convert_page(cms_page) 
-
-  hostname = Socket.gethostname
+  if ENV['STAGING'].nil?
+    hostname = Socket.gethostname
+  else
+  hostname = "http://news-stand-staging.herokuapp.com"
+end
 
   # categories to tabs
   tags_before = cms_page.categories.map(&:label)
@@ -71,10 +74,12 @@ def convert_page(cms_page)
   else
     imgs.each do |img|
       img.strip!
-      if img =~ /\A\/?images/
-        img = "http://#{hostname}/#{img}"
-      elsif img =~ /amazon/
-        img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
+      if ENV['STAGING'].nil?
+        if img =~ /\A\/?images/
+          img = "http://#{hostname}/#{img}"
+        elsif img =~ /amazon/
+          img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
+        end
       end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")

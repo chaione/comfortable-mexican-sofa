@@ -27,11 +27,6 @@ end
 
 
 def convert_page(cms_page) 
-  if ENV['STAGING'].nil?
-    hostname = Socket.gethostname
-  else
-  hostname = "http://news-stand-staging.herokuapp.com"
-end
 
   # categories to tabs
   tags_before = cms_page.categories.map(&:label)
@@ -72,15 +67,14 @@ end
   if imgs.size == 0
     html = remove_section(html, '<section id="thumb-gallery"', '</section>')
   else
+    hostname = "newsstand.nblenergy.com"
     imgs.each do |img|
       img.strip!
-      if ENV['STAGING'].nil?
         if img =~ /\A\/?images/
           img = "http://#{hostname}/#{img}"
         elsif img =~ /amazon/
           img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
         end
-      end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")
       image_str.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")

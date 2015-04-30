@@ -22,7 +22,7 @@ def find_date(str, pdate)
     str = ret[0..s]
     str.strip!
   end
-  return str
+  return "Date String #{str}"
 end
 
 

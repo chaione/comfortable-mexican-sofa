@@ -18,11 +18,11 @@ def find_publish_on_date(str, pdate)
   ret.gsub!('>', '')
   ret.strip!
   if not ret.index(':').nil?
-    s = ret.index(':') - 2
+    s = ret.index(':') - 3
     str = ret[0..s]
     str.strip!
   end
-  return "Date #{str}"
+  return str
 end
 
 

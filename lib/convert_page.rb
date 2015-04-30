@@ -53,9 +53,10 @@ def convert_page(cms_page)
   idx = html.index('<div class="body_content">') + '<div class="body_content">'.size
   endidx = html.index('</div>', idx)
   body = html[(idx+1)..(endidx-1)]
+  body = "<p>#{body}"
   body.gsub!("\r\n\r\n", "<p />")
-  body.gsub!("\r\n", '<br />')
-  html = "#{html[0..(idx-1)]}#{body}#{html[endidx..(html.size)]}"
+  body.gsub!("\r\n", '<br /><p />')
+  html = "#{html[0..(idx-1)]}#{body}#{html[endidx..(html.size)]}</p>"
   
   # images
   idx = html.index('nss_images')

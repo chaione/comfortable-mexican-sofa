@@ -71,10 +71,15 @@ def convert_page(cms_page)
     imgs.each do |img|
       img.strip!
       original_image = img
+      logger.error("IMAGE: original image #{img}")
         if img =~ /\A\/?images/
           img = "http://#{hostname}/#{img}"
+          logger.error("IMAGE: #{img} from #{original_image}")
         elsif img =~ /amazon/
+          logger.error("IMAGE: AWS")
           img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
+        else
+          logger.error("IMAGE: Unknown #{img}")
         end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")

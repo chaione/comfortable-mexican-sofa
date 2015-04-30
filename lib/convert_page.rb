@@ -17,7 +17,7 @@ def find_date(str, pdate)
   ret.gsub!('<', '')
   ret.gsub!('>', '')
   ret.strip!
-  if ret.index(':') != 0
+  if not ret.index(':').nil?
     s = ret.index(':') - 2
     str = ret[0..s]
     str.strip!

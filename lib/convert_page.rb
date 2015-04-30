@@ -70,6 +70,7 @@ def convert_page(cms_page)
     hostname = "newsstand.nblenergy.com"
     imgs.each do |img|
       img.strip!
+      original_image = img
         if img =~ /\A\/?images/
           img = "http://#{hostname}/#{img}"
         elsif img =~ /amazon/
@@ -77,7 +78,7 @@ def convert_page(cms_page)
         end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")
-      image_str.sub!("#{img}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+      image_str.sub!("#{original_image}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
     end
     html = "#{html[0..(idx-1)]}#{image_str}#{html[endidx..-1]}"
   end

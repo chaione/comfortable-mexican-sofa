@@ -30,9 +30,9 @@ def find_publish_on_date(str, pdate)
 end
 
 def mylog(str)
-  fd = open("/home/jwright/cms.log", "aw")
-  fd.puts str
-  fd.close
+#  fd = open("cms.log", "a")
+#  fd.puts str
+#  fd.close
 end
 
 def convert_page(cms_page) 
@@ -80,11 +80,13 @@ def convert_page(cms_page)
     html = remove_section(html, '<section id="thumb-gallery"', '</section>')
   else
     hostname = "newsstand.nblenergy.com"
+    #hostname = "localhost:3000"
+    #hostname = "news-stand-staging.herokuapp.com"
     imgs.each do |img|
       img.strip!
       mylog("original image #{img}")
         if img =~ /\A\/?images/
-          img = "http://#{hostname}/#{img}"
+          img = "http://#{hostname}#{img}"
         elsif img =~ /amazonaws/
           img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
         else
@@ -96,7 +98,7 @@ def convert_page(cms_page)
       newstr << " "
     end
     mylog(newstr)
-    html = "#{html[0..(idx-1)]}#{newstr}#{html[endidx..-1]}"
+    html = "#{html[0..(idx)]}#{newstr}#{html[endidx..-1]}"
   end
        
   # categories or tags
@@ -111,6 +113,6 @@ def convert_page(cms_page)
   
   # remove published_on
   html = remove_section(html, '<div class="publish_on">', '</div>')       
-
+  mylog(html)
   return html
 end

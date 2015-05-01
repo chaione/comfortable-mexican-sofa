@@ -17,10 +17,14 @@ def find_publish_on_date(str, pdate)
   ret.gsub!('<', '')
   ret.gsub!('>', '')
   ret.strip!
+
   if not ret.index(':').nil?
     s = ret.index(':') - 3
     str = ret[0..s]
     str.strip!
+  end
+  if ret.blank?
+    str = pdate.strftime("%Y-%-m-%-d")
   end
   return str
 end
@@ -71,15 +75,10 @@ def convert_page(cms_page)
     imgs.each do |img|
       img.strip!
       original_image = img
-      logger.error("IMAGE: original image #{img}")
         if img =~ /\A\/?images/
           img = "http://#{hostname}/#{img}"
-          logger.error("IMAGE: #{img} from #{original_image}")
-        elsif img =~ /amazon/
-          logger.error("IMAGE: AWS")
+        elsif img =~ /amazonaws/
           img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
-        else
-          logger.error("IMAGE: Unknown #{img}")
         end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")
@@ -91,7 +90,7 @@ def convert_page(cms_page)
   # categories or tags
   tagstr = tags.join(" ")
   html.gsub!('$TAGS$', "#{tagstr}")
-  pdate = cms_page.updated_at
+  pdate = cms_page.created_at
   
   #  templates
   html.sub!('$UPDATED_AT$', find_publish_on_date(html, pdate))

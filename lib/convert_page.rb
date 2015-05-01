@@ -30,7 +30,7 @@ def find_publish_on_date(str, pdate)
 end
 
 def mylog(str)
-  fd = open("cms.log", "a")
+  fd = open("/home/jwright/cms.log", "a")
   fd.puts str
   fd.close
 end
@@ -87,7 +87,7 @@ def convert_page(cms_page)
         elsif img =~ /amazonaws/
           img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
         else
-          mylog("unknown image type")
+          mylog("unknown image type #{img}")
         end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")

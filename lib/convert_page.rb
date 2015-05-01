@@ -30,7 +30,7 @@ def find_publish_on_date(str, pdate)
 end
 
 def mylog(str)
-  fd = open("/home/jwright/cms.log", "a")
+  fd = open("/home/jwright/cms.log", "aw")
   fd.puts str
   fd.close
 end
@@ -72,6 +72,7 @@ def convert_page(cms_page)
   image_str = html[(idx+1)..(endidx-1)]
   image_str.strip!
   image_str.gsub!(',', ' ')
+  mylog(image_str)
   imgs = image_str.split(' ')
   newstr = ""
   if imgs.size == 0
@@ -94,6 +95,7 @@ def convert_page(cms_page)
       newstr << "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>"
       newstr << " "
     end
+    mylog(newstr)
     html = "#{html[0..(idx-1)]}#{newstr}#{html[endidx..-1]}"
   end
        

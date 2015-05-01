@@ -30,9 +30,9 @@ def find_publish_on_date(str, pdate)
 end
 
 def mylog(str)
-#  fd = open("cms.log", "a")
-#  fd.puts str
-#  fd.close
+  fd = open("/home/jwright/cms.log", "a")
+  fd.puts str
+  fd.close
 end
 
 def convert_page(cms_page) 

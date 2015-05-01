@@ -72,6 +72,7 @@ def convert_page(cms_page)
   image_str = html[(idx+1)..(endidx-1)]
   image_str.strip!
   image_str.gsub!(',', ' ')
+  mylog("--------------------------------------------------")
   mylog(image_str)
   imgs = image_str.split(' ')
   newstr = ""
@@ -88,7 +89,9 @@ def convert_page(cms_page)
         if img =~ /\A\/?images/
           img = "http://#{hostname}#{img}"
         elsif img =~ /amazonaws/
-          img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
+          mylog("amazon aws image")
+          img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/files/files/000/000", "http://#{hostname}/images")
+          mylog("img #{img}")
         else
           mylog("unknown image type #{img}")
         end
@@ -113,6 +116,5 @@ def convert_page(cms_page)
   
   # remove published_on
   html = remove_section(html, '<div class="publish_on">', '</div>')       
-  mylog(html)
   return html
 end

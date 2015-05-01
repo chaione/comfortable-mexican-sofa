@@ -29,6 +29,11 @@ def find_publish_on_date(str, pdate)
   return str
 end
 
+def mylog(str)
+  fd = open("cms.log", "a")
+  fd.puts str
+  fd.close
+end
 
 def convert_page(cms_page) 
 
@@ -68,23 +73,28 @@ def convert_page(cms_page)
   image_str.strip!
   image_str.gsub!(',', ' ')
   imgs = image_str.split(' ')
+  newstr = ""
   if imgs.size == 0
+    mylog("imgs.size == 0")
     html = remove_section(html, '<section id="thumb-gallery"', '</section>')
   else
     hostname = "newsstand.nblenergy.com"
     imgs.each do |img|
       img.strip!
-      original_image = img
+      mylog("original image #{img}")
         if img =~ /\A\/?images/
           img = "http://#{hostname}/#{img}"
         elsif img =~ /amazonaws/
           img.sub!("http://s3.amazonaws.com/noble-news-stand-staging/comfy/cms/file/files/000/000", "http://#{hostname}/images")
+        else
+          mylog("unknown image type")
         end
       #next if not img =~ /http/
       thumb = img.sub("original", "cms_thumb")
-      image_str.sub!("#{original_image}", "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>")
+      newstr << "<li class=\"mTSThumbContainer\"><a rel=\"group1\" class=\"single_image\" href=\"#{img}\"><img class=\"mTSThumb\" src=\"#{thumb}\"/></a></li>"
+      newstr << " "
     end
-    html = "#{html[0..(idx-1)]}#{image_str}#{html[endidx..-1]}"
+    html = "#{html[0..(idx-1)]}#{newstr}#{html[endidx..-1]}"
   end
        
   # categories or tags

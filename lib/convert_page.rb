@@ -8,7 +8,7 @@ def remove_section(html, first, last)
   html = "#{html[0..(idx-1)]}#{html[endidx..(html.size)]}"
 end
 
-def find_publish_on_date(str, pdate)
+def find_publish(str)
   startidx = str.index("<div class=\"publish_on\">")
   endidx = str.index("</div>", startidx)
   startidx += "<div class=\"publish_on\">".size
@@ -24,15 +24,15 @@ def find_publish_on_date(str, pdate)
     str.strip!
   end
   if ret.blank?
-    str = pdate.strftime("%Y-%-m-%-d")
+    return nil
   end
   return str
 end
 
 def mylog(str)
-  fd = open("/home/jwright/cms.log", "a")
-  fd.puts str
-  fd.close
+#  fd = open("/home/jwright/cms.log", "a")
+#  fd.puts str
+#  fd.close
 end
 
 def convert_page(cms_page) 
@@ -103,14 +103,39 @@ def convert_page(cms_page)
     mylog(newstr)
     html = "#{html[0..(idx)]}#{newstr}#{html[endidx..-1]}"
   end
+  
+  # links
+  idx = html.index("class=\"links\"")
+  endoflinks = html.index("</ul>", idx)
+  idx = html.index("href=", idx)
+  while true
+    break if idx.nil? or idx > endoflinks
+    idx += 6
+    endidx = html.index('"', idx)
+    link = html[idx..(endidx-1)].downcase
+    if link =~ /\Ahttp/
+    elsif link =~ /\Amailto/
+    elsif link =~ /\Aibmspc/
+    elsif link.size == 0 or link.blank?
+    else
+      mylog("link #{link}")
+      link = "http://#{link}"
+      before = html[0..(idx-1)]
+      after = html[(endidx)..-1]
+      html = "#{before}#{link}#{after}"
+      idx += link.size
+    end    
+    idx = html.index("href=", idx)
+  end   
        
   # categories or tags
   tagstr = tags.join(" ")
   html.gsub!('$TAGS$', "#{tagstr}")
   pdate = cms_page.created_at
-  
+  str = find_publish(html)
+  str = cms_page.created_at.strftime("%y-%-m-%-d")  if str.nil?
   #  templates
-  html.sub!('$UPDATED_AT$', find_publish_on_date(html, pdate))
+  html.sub!('$UPDATED_AT$', str)
   html.sub!('$TITLE$', cms_page.label)
   html.sub!('$ARTICLEID$', cms_page.id.to_s)
   

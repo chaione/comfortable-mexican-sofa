@@ -22,5 +22,3 @@
 #= require comfy/admin/cms/uploader
 #= require comfy/admin/cms/files
 #= require comfy/admin/cms/custom
-#= require video
-#= require ./lib/vjs.youtube

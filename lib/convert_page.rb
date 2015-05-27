@@ -35,7 +35,7 @@ def mylog(str)
 #  fd.close
 end
 
-def convert_page(cms_page) 
+def convert_page(cms_page)
 
   # categories to tabs
   tags_before = cms_page.categories.map(&:label)
@@ -43,11 +43,11 @@ def convert_page(cms_page)
   tags_before.each do |tag|
     tags << tag if not tag =~ /location/
   end
-  
+
   # html
   html = cms_page.content_cache
-  
-  # youtube
+
+  # video
   idx = html.index('<div class="video-container">')
   endidx = html.index('</div>', idx) + '</div>'.size
   srcidx = html.index('src="', idx) + 'src="'.size
@@ -55,7 +55,7 @@ def convert_page(cms_page)
   if endsrcidx - srcidx < 7
     html = remove_section(html, '<div class="video-container">', '</div>')
   end
-  
+
   # content
   idx = html.index('<div class="body_content">') + '<div class="body_content">'.size
   endidx = html.index('</div>', idx)
@@ -64,7 +64,7 @@ def convert_page(cms_page)
   body.gsub!("\r\n\r\n", "<p />")
   body.gsub!("\r\n", '<br /><p />')
   html = "#{html[0..(idx-1)]}#{body}#{html[endidx..(html.size)]}</p>"
-  
+
   # images
   idx = html.index('nss_images')
   idx = html.index(">", idx)
@@ -103,7 +103,7 @@ def convert_page(cms_page)
     mylog(newstr)
     html = "#{html[0..(idx)]}#{newstr}#{html[endidx..-1]}"
   end
-  
+
   # links
   idx = html.index("class=\"links\"")
   endoflinks = html.index("</ul>", idx)
@@ -124,10 +124,10 @@ def convert_page(cms_page)
       after = html[(endidx)..-1]
       html = "#{before}#{link}#{after}"
       idx += link.size
-    end    
+    end
     idx = html.index("href=", idx)
-  end   
-       
+  end
+
   # categories or tags
   tagstr = tags.join(" ")
   html.gsub!('$TAGS$', "#{tagstr}")
@@ -138,8 +138,8 @@ def convert_page(cms_page)
   html.sub!('$UPDATED_AT$', str)
   html.sub!('$TITLE$', cms_page.label)
   html.sub!('$ARTICLEID$', cms_page.id.to_s)
-  
+
   # remove published_on
-  html = remove_section(html, '<div class="publish_on">', '</div>')       
+  html = remove_section(html, '<div class="publish_on">', '</div>')
   return html
 end

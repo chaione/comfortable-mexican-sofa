@@ -47,15 +47,6 @@ def convert_page(cms_page)
   # html
   html = cms_page.content_cache
 
-  # video
-  idx = html.index('<div class="video-container">')
-  endidx = html.index('</div>', idx) + '</div>'.size
-  srcidx = html.index('src="', idx) + 'src="'.size
-  endsrcidx = html.index('"', srcidx)
-  if endsrcidx - srcidx < 7
-    html = remove_section(html, '<div class="video-container">', '</div>')
-  end
-
   # content
   idx = html.index('<div class="body_content">') + '<div class="body_content">'.size
   endidx = html.index('</div>', idx)

@@ -71,9 +71,7 @@ def convert_page(cms_page)
     mylog("imgs.size == 0")
     html = remove_section(html, '<section id="thumb-gallery"', '</section>')
   else
-    hostname = "newsstand.nblenergy.com"
-    #hostname = "localhost:3000"
-    #hostname = "news-stand-staging.herokuapp.com"
+    hostname = ENV['HOSTNAME']
     imgs.each do |img|
       img.strip!
       mylog("original image #{img}")
